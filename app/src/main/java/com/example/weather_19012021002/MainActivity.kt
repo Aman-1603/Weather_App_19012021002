@@ -49,15 +49,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     lateinit var locationRequest: LocationRequest
     val PERMISSION_ID = 1010
-    //upto this
 
-    // for recycler adapter for early time
-
-//
-
-
-    //
-    //list
 
     val listitems = hourlyweather.hourly_Array as ArrayList<hourlyweather>
     val adapter = hourly_adapter(this, listitems)
@@ -70,7 +62,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var icon: String
 
 //    val CITY: String = "pune"
-//upto this
 
     val API: String = "469fdefd886b4db9b0745323210411" // Use API key // uncomment this
     lateinit var progressBar: ProgressBar
@@ -123,8 +114,6 @@ class MainActivity : AppCompatActivity() {
 
 
 
-
-
         findViewById<LinearLayout>(R.id.main_container).visibility = View.GONE
 
         //list view
@@ -139,23 +128,8 @@ class MainActivity : AppCompatActivity() {
             Log.d("Debug:", isLocationEnabled().toString())
             ActivityResultContracts.RequestPermission()
 
-            /* fusedLocationProviderClient.lastLocation.addOnSuccessListener{location: Location? ->
-                 textView.text = location?.latitude.toString() + "," + location?.longitude.toString()
-             }*/
             getLastLocation()
         }
-
-        //menu city
-//        val menu_city = findViewById<View>(R.id.view)
-//        menu_city.setOnClickListener {
-//            Toast.makeText(applicationContext, "clicked", Toast.LENGTH_LONG).show()
-//            Intent(this, search_city::class.java).apply {
-//                startActivity(this)
-//            }
-//        }
-
-
-
 
         val input = findViewById<EditText>(R.id.main_searchview)
         val search = findViewById<Button>(R.id.main_searchbutton)
@@ -163,10 +137,6 @@ class MainActivity : AppCompatActivity() {
 
         search.setOnClickListener {
 
-            //for recycler hourly adapterx`x`
-
-
-            //take input in edit text and excecute weather task
             CITY = input.getText().toString()
             Toast.makeText(applicationContext, input.getText().toString(), Toast.LENGTH_LONG).show()
             weatherTask().execute()
@@ -185,11 +155,6 @@ fun temp()
         override fun onPreExecute() {
             super.onPreExecute()
 
-
-            /* Showing the ProgressBar, Making the main design GONE */
-//            findViewById<ProgressBar>(R.id.loader).visibility = View.VISIBLE
-            //          findViewById<LinearLayout>(R.id.mainContainer).visibility = View.GONE
-//            findViewById<TextView>(R.id.errorText).visibility = View.GONE
         }
 
         override fun doInBackground(vararg params: String?): String? {
@@ -231,8 +196,7 @@ fun temp()
 
                 //recycler view
                 val hourlyupdate = first.getJSONArray("hour")
-                // val hourlyupdate_start = hourlyupdate.getJSONObject(0)
-                // val hourlytime = hourlyupdate_start.getString("temp_c")
+
 
                 //for testing......
                 // findViewById<TextView>(R.id.nothing).text = hourlytime
@@ -257,18 +221,6 @@ fun temp()
 
                 }
 
-
-//                for (i in 0..12) {
-//
-//                    val jsonObj_0 = jsonarr.getJSONObject(i)
-//                    val id_jason = "Person ID : " + jsonObj_0.getString("_id")
-//                    val name_json = "Name : " + jsonObj_0.getString("name")
-//                    val num_json = "Phone No : " + jsonObj_0.getString("phone")
-//                    val add_json = "Address : " + jsonObj_0.getString("address")
-//                    listitems.add(Contact(id_jason, name_json, num_json, add_json))
-//                    list.adapter = adapter
-//                }
-                //end here
 
                 val condition = current.getJSONObject("condition")
 
@@ -344,7 +296,6 @@ fun temp()
 //                val iv = findViewById<ImageView>(R.id.main_icon)
                 val image: ImageView = findViewById(R.id.main_icon)
                 Glide.with(this@MainActivity).load("https://" + url).into(image)
-//                Glide.with(this@MainActivity).load("https://s3.amazonaws.com/appsdeveloperblog/Micky.jpg").into(image)
 
 
                 progressBar = findViewById(R.id.progress_bar)
@@ -357,13 +308,10 @@ fun temp()
                 //recylar view
 
                 findViewById<LinearLayout>(R.id.main_container).visibility = View.VISIBLE
-                /* Views populated, Hiding the loader, Showing the main design */
-//                findViewById<ProgressBar>(R.id.loader).visibility = View.GONE
-//                findViewById<RelativeLayout>(R.id.mainContainer).visibility = View.VISIBLE
+
 
             } catch (e: Exception) {
-//                findViewById<ProgressBar>(R.id.loader).visibility = View.GONE
-//                findViewById<TextView>(R.id.errorText).visibility = View.VISIBLE
+
 
             }
 
@@ -444,15 +392,6 @@ fun temp()
     }
 
 
-//    fun NewLocationData(){
-//        var locationRequest = LocationRequest
-//        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-//        locationRequest.interval = 0
-//        locationRequest.fastestInterval = 0
-//        locationRequest.numUpdates = 1
-//        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-//        fusedLocationProviderClient!!.requestLocationUpdates(locationRequest,locationCallback, Looper.myLooper())
-//    }
 
 
     private val locationCallback = object : LocationCallback() {
@@ -544,39 +483,4 @@ fun temp()
         return countryName
     }
 
-    private fun getcityextra(lat: Double, long: Double): String {
-        var cityName: String = ""
-        var countryName = ""
-        var geoCoder = Geocoder(this, Locale.getDefault())
-        var Adress = geoCoder.getFromLocation(lat, long, 3)
-
-        cityName = Adress.get(0).locality
-        countryName = Adress.get(0).countryName
-
-        Log.d(
-            "Debug:",
-            "Your City: " + cityName + " ; your Country " + countryName + "address" + Adress
-        )
-        return Adress.toString()
-    }
-
-    private fun getgeocoder(lat: Double, long: Double): String {
-        var cityName: String = ""
-        var countryName = ""
-        var geoCoder = Geocoder(this, Locale.getDefault())
-        var Adress = geoCoder.getFromLocation(lat, long, 3)
-
-        cityName = Adress.get(0).locality
-        countryName = Adress.get(0).countryName
-        Log.d("Debug:", "Your City: " + cityName + " ; your Country " + countryName)
-        return geoCoder.toString()
-    }
-
-//    companion object{
-//        var city1 = ""
-//    }
-
 }
-
-
-
