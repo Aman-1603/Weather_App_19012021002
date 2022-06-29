@@ -1,5 +1,4 @@
-#MAD
-# MAD Assignment II (Weather App)
+(Weather App)
 
 The main goal of this project is to develop an android application for checking weather conditions like temperature, the pressure at other places through android mobile.
 
